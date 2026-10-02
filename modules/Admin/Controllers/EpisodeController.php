@@ -17,6 +17,7 @@ use App\Entities\Podcast;
 use App\Entities\Post;
 use App\Models\EpisodeCommentModel;
 use App\Models\EpisodeModel;
+use App\Models\PersonModel;
 use App\Models\PodcastModel;
 use App\Models\PostModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -139,6 +140,8 @@ class EpisodeController extends BaseController
             'nextEpisodeNumber'   => $episodeTemplate['prefill_episode_number']
                 ? (new EpisodeModel())->getNextEpisodeNumber($this->podcast->id, $currentSeasonNumber)
                 : null,
+            'personOptions'   => (new PersonModel())->getPersonOptions(),
+            'taxonomyOptions' => (new PersonModel())->getTaxonomyOptions(),
         ];
         replace_breadcrumb_params([
             0 => $this->podcast->at_handle,
@@ -241,6 +244,15 @@ class EpisodeController extends BaseController
                 ->back()
                 ->withInput()
                 ->with('errors', $episodeModel->errors());
+        }
+
+        if (can_podcast(auth()->user(), $this->podcast->id, 'episodes.manage-persons')) {
+            (new PersonModel())->addEpisodePersons(
+                $this->podcast->id,
+                (int) $newEpisodeId,
+                $this->request->getPost('persons') ?? [],
+                $this->request->getPost('roles') ?? [],
+            );
         }
 
         // update podcast's episode_description_footer_markdown if changed

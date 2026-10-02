@@ -135,6 +135,34 @@
 
 </Forms.Section>
 
+<?php if (can_podcast(auth()->user(), $podcast->id, 'episodes.manage-persons')): ?>
+<Forms.Section
+    title="<?= lang('Person.episode_form.add_section_title') ?>"
+    subtitle="<?= lang('Person.episode_form.add_section_subtitle') ?>">
+
+<Forms.Field
+    as="MultiSelect"
+    id="persons"
+    name="persons[]"
+    label="<?= esc(lang('Person.episode_form.persons')) ?>"
+    hint="<?= esc(lang('Person.episode_form.persons_hint')) ?>"
+    options="<?= esc(json_encode($personOptions)) ?>"
+    selected="<?= esc(json_encode(old('persons', []))) ?>"
+/>
+
+<Forms.Field
+    as="MultiSelect"
+    id="roles"
+    name="roles[]"
+    label="<?= esc(lang('Person.episode_form.roles')) ?>"
+    hint="<?= esc(lang('Person.episode_form.roles_hint')) ?>"
+    options="<?= esc(json_encode($taxonomyOptions)) ?>"
+    selected="<?= esc(json_encode(old('roles', []))) ?>"
+/>
+
+</Forms.Section>
+<?php endif; ?>
+
 <Forms.Section title="<?= lang('Episode.form.premium_title') ?>">
     <Forms.Toggler class="mt-2" name="premium" value="yes" checked="<?= $podcast->is_premium_by_default ? 'true' : 'false' ?>">
         <?= lang('Episode.form.premium') ?></Forms.Toggler>
