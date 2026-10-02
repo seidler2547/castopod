@@ -23,6 +23,7 @@ return [
     'see_episodes' => 'See episodes',
     'see_contributors' => 'See contributors',
     'monetization_other' => 'Other monetization',
+    'episode_template' => 'Episode template',
     'go_to_page' => 'Go to page',
     'latest_episodes' => 'Latest episodes',
     'see_all_episodes' => 'See all episodes',
@@ -119,6 +120,10 @@ return [
         'location_section_subtitle' => 'What place is this podcast about?',
         'location_name' => 'Location name or address',
         'location_name_hint' => 'This can be a real place or fictional',
+        'episode_template_section_title' => 'Episode template',
+        'episode_template_section_subtitle' =>
+            'These values are pre-filled when creating a new episode. You can still change them for each episode.',
+        'episode_template_prefill_episode_number' => 'Pre-fill the episode number with the next highest number',
         'monetization_section_title' => 'Monetization',
         'monetization_section_subtitle' =>
             'Earn money thanks to your audience.',

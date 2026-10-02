@@ -14,10 +14,11 @@ $podcastNavigation = [
     ],
     'episodes' => [
         'icon'              => 'play-circle-fill', // @icon("play-circle-fill")
-        'items'             => ['episode-list', 'episode-create'],
+        'items'             => ['episode-list', 'episode-create', 'podcast-episode-template'],
         'items-permissions' => [
-            'episode-list'   => 'episodes.view',
-            'episode-create' => 'episodes.create',
+            'episode-list'             => 'episodes.view',
+            'episode-create'           => 'episodes.create',
+            'podcast-episode-template' => 'edit',
         ],
         'add-cta'     => 'episode-create',
         'count'       => $podcast->getEpisodesCount(),

@@ -130,14 +130,15 @@ class EpisodeController extends BaseController
     {
         helper(['form']);
 
+        $episodeTemplate = $this->podcast->episode_template;
         $currentSeasonNumber = (new EpisodeModel())->getCurrentSeasonNumber($this->podcast->id);
         $data = [
             'podcast'             => $this->podcast,
+            'episodeTemplate'     => $episodeTemplate,
             'currentSeasonNumber' => $currentSeasonNumber,
-            'nextEpisodeNumber'   => (new EpisodeModel())->getNextEpisodeNumber(
-                $this->podcast->id,
-                $currentSeasonNumber
-            ),
+            'nextEpisodeNumber'   => $episodeTemplate['prefill_episode_number']
+                ? (new EpisodeModel())->getNextEpisodeNumber($this->podcast->id, $currentSeasonNumber)
+                : null,
         ];
         replace_breadcrumb_params([
             0 => $this->podcast->at_handle,

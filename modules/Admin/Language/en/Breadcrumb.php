@@ -42,6 +42,7 @@ return [
     'social' => 'social networks',
     'funding' => 'funding',
     'monetization-other' => 'other monetization',
+    'episode-template' => 'episode template',
     'analytics' => 'analytics',
     'locations' => 'locations',
     'webpages' => 'web pages',

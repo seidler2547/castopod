@@ -188,6 +188,13 @@ $routes->group(
                     'as'     => 'podcast-monetization-other',
                     'filter' => 'permission:podcast#.edit',
                 ]);
+                $routes->get('episode-template', 'PodcastController::episodeTemplate/$1', [
+                    'as'     => 'podcast-episode-template',
+                    'filter' => 'permission:podcast#.edit',
+                ]);
+                $routes->post('episode-template', 'PodcastController::attemptEpisodeTemplate/$1', [
+                    'filter' => 'permission:podcast#.edit',
+                ]);
                 $routes->group('analytics', static function ($routes): void {
                     $routes->get('/', 'PodcastController::viewAnalytics/$1', [
                         'as'     => 'podcast-analytics',

@@ -430,6 +430,45 @@ class PodcastController extends BaseController
         );
     }
 
+    public function episodeTemplate(): string
+    {
+        helper('form');
+
+        $data = [
+            'podcast'         => $this->podcast,
+            'episodeTemplate' => $this->podcast->episode_template,
+        ];
+
+        replace_breadcrumb_params([
+            0 => $this->podcast->at_handle,
+        ]);
+        return view('podcast/episode_template', $data);
+    }
+
+    public function attemptEpisodeTemplate(): RedirectResponse
+    {
+        service('settings')
+            ->set(
+                'Podcast.episodeTemplate',
+                [
+                    'title'                  => $this->request->getPost('title'),
+                    'description'            => $this->request->getPost('description'),
+                    'type'                   => $this->request->getPost('type'),
+                    'parental_advisory'      => $this->request->getPost('parental_advisory'),
+                    'location_name'          => $this->request->getPost('location_name'),
+                    'custom_rss'             => $this->request->getPost('custom_rss'),
+                    'is_blocked'             => $this->request->getPost('block') === 'yes',
+                    'prefill_episode_number' => $this->request->getPost('prefill_episode_number') === 'yes',
+                ],
+                'podcast:' . $this->podcast->id
+            );
+
+        return redirect()->route('podcast-episode-template', [$this->podcast->id])->with(
+            'message',
+            lang('Podcast.messages.editSuccess')
+        );
+    }
+
     public function deleteBanner(): RedirectResponse
     {
         if (! $this->podcast->banner instanceof Image) {

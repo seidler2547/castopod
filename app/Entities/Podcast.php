@@ -91,6 +91,7 @@ use RuntimeException;
  * @property string $publication_status
  * @property bool $is_premium_by_default
  * @property bool $is_premium
+ * @property array{title: string, description: string, type: string, parental_advisory: string, location_name: string, custom_rss: string, is_blocked: bool, prefill_episode_number: bool} $episode_template
  * @property Time|null $published_at
  * @property Time $created_at
  * @property Time $updated_at
@@ -662,5 +663,25 @@ class Podcast extends Entity
     public function getOp3Url(): string
     {
         return 'https://op3.dev/show/' . $this->guid;
+    }
+
+    /**
+     * @return array{title: string, description: string, type: string, parental_advisory: string, location_name: string, custom_rss: string, is_blocked: bool, prefill_episode_number: bool}
+     */
+    public function getEpisodeTemplate(): array
+    {
+        $episodeTemplate = service('settings')
+            ->get('Podcast.episodeTemplate', 'podcast:' . $this->id) ?? [];
+
+        return array_merge([
+            'title'                  => '',
+            'description'            => '',
+            'type'                   => 'full',
+            'parental_advisory'      => 'undefined',
+            'location_name'          => '',
+            'custom_rss'             => '',
+            'is_blocked'             => false,
+            'prefill_episode_number' => true,
+        ], $episodeTemplate);
     }
 }

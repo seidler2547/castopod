@@ -40,6 +40,7 @@
     name="title"
     label="<?= esc(lang('Episode.form.title')) ?>"
     hint="<?= esc(lang('Episode.form.title_hint')) ?>"
+    value="<?= esc($episodeTemplate['title']) ?>"
     required="true"
     data-slugify="title" />
 
@@ -47,7 +48,7 @@
     <Forms.Label for="slug"><?= lang('Episode.form.permalink') ?></Forms.Label>
     <permalink-edit class="inline-flex items-center w-full text-xs" edit-label="<?= lang('Common.edit') ?>" copy-label="<?= lang('Common.copy') ?>" copied-label="<?= lang('Common.copied') ?>" permalink-base="<?= url_to('podcast-episodes', $podcast->handle) ?>">
         <span slot="domain"><?= '…/' . esc($podcast->at_handle) . '/' ?></span>
-        <Forms.Input name="slug" required="true" data-slugify="slug" slot="slug-input" class="flex-1 text-xs" />
+        <Forms.Input name="slug" value="<?= esc(slugify($episodeTemplate['title'])) ?>" required="true" data-slugify="slug" slot="slug-input" class="flex-1 text-xs" />
     </permalink-edit>
 </div>
 
@@ -75,17 +76,17 @@
     value="full"
     name="type"
     hint="<?= esc(lang('Episode.form.type.full_hint')) ?>"
-    isChecked="true" ><?= lang('Episode.form.type.full') ?></Forms.RadioButton>
+    isChecked="<?= $episodeTemplate['type'] === 'full' ? 'true' : 'false' ?>" ><?= lang('Episode.form.type.full') ?></Forms.RadioButton>
 <Forms.RadioButton
     value="trailer"
     name="type"
     hint="<?= esc(lang('Episode.form.type.trailer_hint')) ?>"
-    isChecked="false" ><?= lang('Episode.form.type.trailer') ?></Forms.RadioButton>    
+    isChecked="<?= $episodeTemplate['type'] === 'trailer' ? 'true' : 'false' ?>" ><?= lang('Episode.form.type.trailer') ?></Forms.RadioButton>    
 <Forms.RadioButton
     value="bonus"
     name="type"
     hint="<?= esc(lang('Episode.form.type.bonus_hint')) ?>"
-    isChecked="false" ><?= lang('Episode.form.type.bonus') ?></Forms.RadioButton>
+    isChecked="<?= $episodeTemplate['type'] === 'bonus' ? 'true' : 'false' ?>" ><?= lang('Episode.form.type.bonus') ?></Forms.RadioButton>
 </fieldset>
 
 <fieldset class="flex gap-1">
@@ -96,15 +97,15 @@
 <Forms.RadioButton
     value="undefined"
     name="parental_advisory"
-    isChecked="true" ><?= lang('Episode.form.parental_advisory.undefined') ?></Forms.RadioButton>
+    isChecked="<?= $episodeTemplate['parental_advisory'] === 'undefined' ? 'true' : 'false' ?>" ><?= lang('Episode.form.parental_advisory.undefined') ?></Forms.RadioButton>
 <Forms.RadioButton
     value="clean"
     name="parental_advisory"
-    isChecked="false" ><?= lang('Episode.form.parental_advisory.clean') ?></Forms.RadioButton>    
+    isChecked="<?= $episodeTemplate['parental_advisory'] === 'clean' ? 'true' : 'false' ?>" ><?= lang('Episode.form.parental_advisory.clean') ?></Forms.RadioButton>    
 <Forms.RadioButton
     value="explicit"
     name="parental_advisory"
-    isChecked="false" ><?= lang('Episode.form.parental_advisory.explicit') ?></Forms.RadioButton>
+    isChecked="<?= $episodeTemplate['parental_advisory'] === 'explicit' ? 'true' : 'false' ?>" ><?= lang('Episode.form.parental_advisory.explicit') ?></Forms.RadioButton>
 </fieldset>
 
 
@@ -120,6 +121,7 @@
     as="MarkdownEditor"
     name="description"
     label="<?= esc(lang('Episode.form.description')) ?>"
+    value="<?= esc($episodeTemplate['description']) ?>"
     required="true"
     disallowList="header,quote" />
 
@@ -145,7 +147,8 @@
 <Forms.Field
     name="location_name"
     label="<?= esc(lang('Episode.form.location_name')) ?>"
-    hint="<?= esc(lang('Episode.form.location_name_hint')) ?>" />
+    hint="<?= esc(lang('Episode.form.location_name_hint')) ?>"
+    value="<?= esc($episodeTemplate['location_name']) ?>" />
 </Forms.Section>
 
 <Forms.Section
@@ -214,9 +217,10 @@
     name="custom_rss"
     label="<?= esc(lang('Episode.form.custom_rss')) ?>"
     hint="<?= esc(lang('Episode.form.custom_rss_hint')) ?>"
+    content="<?= esc($episodeTemplate['custom_rss']) ?>"
 />
 
-<Forms.Toggler name="block" value="yes" checked="false" hint="<?= esc(lang('Episode.form.block_hint')) ?>"><?= lang('Episode.form.block') ?></Forms.Toggler>
+<Forms.Toggler name="block" value="yes" checked="<?= $episodeTemplate['is_blocked'] ? 'true' : 'false' ?>" hint="<?= esc(lang('Episode.form.block_hint')) ?>"><?= lang('Episode.form.block') ?></Forms.Toggler>
 
 </Forms.Section>
 
